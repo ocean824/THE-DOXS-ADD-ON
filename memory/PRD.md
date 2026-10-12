@@ -44,7 +44,24 @@ Single shared organization, RBAC plus record relationships, no invented tenancy.
 - Clearly labeled sample properties with inactive sample coordinator profiles for initial review.
 - Initial frontend production build compiles; external owner login, dashboard, transactions and OpenAPI smoke checks passed. Full test-agent matrix pending at this checkpoint.
 
+## Implemented — 2026-06 (fork 2): knowledge vault, Office/CLI sync, client uploads, calendar
+
+User decisions: knowledge source = local Obsidian vault (owner copies/syncs it in); access to project knowledge needs ALL of approved grant + matching project type + active involvement in the linked transaction, plus a separately approved shared library; grant authority = owner directly, Hermes relaying an explicit owner confirmation, or Hermes under owner-configured knowledge-access rules. "Office CLI" = Microsoft 365 integration via the CLI for Microsoft 365 (Word/Excel/PowerPoint/PDF into the vault). Client uploads land immediately as client-submitted (no review gate). Calendar = built-in (no Google sync).
+
+- Knowledge vault backend (`knowledge_routes.py`, `knowledge_extract.py`): `knowledge_items` (path-unique, text extracted from .md/.txt/.csv/.json/.yaml/.docx/.xlsx/.pptx/.pdf, Mongo text index), `knowledge_grants` (scope shared|project, path_prefix, project_types, expires_at, authority owner|hermes_owner_confirmed|hermes_rule). `permitted_filter()` enforces the three-condition rule; owner unrestricted. Endpoints: items/access/item detail (all roles, filtered), owner sync (JSON text/base64, ≤100 files, ≤25 MB each, deleted_paths), owner multipart upload, patch/delete item, grants CRUD. Hermes: owner `POST /api/integrations/knowledge/confirmation` (single-use 5-min token bound to exact grant body) and service `POST /api/integrations/hermes/knowledge/grants` (scope `knowledge:grant`, idempotent; token path or `settings.knowledge_rules` path). Settings gained `knowledge_rules`.
+- AI gateway: template `knowledge` (transaction optional, prompt required) retrieves top permitted items via `$text`, logs `knowledge_ids`, `done` frame carries `sources`; other templates also receive up to 3 permitted items linked to the transaction.
+- dox-vault CLI (`/app/cli/dox_vault.py`, served by owner-only `GET /api/integrations/cli`): `login` (desktop tokens in ~/.dox-vault.json), `folder` (Obsidian/local folder, --prune), `m365` (shells out to `m365 file list` / `m365 spo file get --asFile`), `status`.
+- Client document uploads: CLIENT may upload to linked transactions; visibility forced `client`, `client_submitted`, `uploaded_by_name`; assigned staff + owners notified; activity visible to client.
+- Calendar (`calendar_routes.py`, `/calendar`): meetings scoped by participant (owner all); propose (participants must be owners or assigned/linked people), accept/decline, reschedule resets responses, organizer/owner cancel; month/week grid merged with contract/contingency/closing milestones; upcoming list; notifications link to `/calendar?meeting=`.
+- Frontend: Knowledge vault page (owner tabs: items / grants / sync tools with CLI download; non-owner: permitted list + preview), Assistant rewritten SSE handling (AbortController, 60 s idle timeout, explicit done, source chips, `?template=` deep link), Calendar page, nav items for all roles, Settings "Hermes knowledge-access rules" section, Connections "Knowledge sync" card, Messages new-thread submit disabled until a participant is picked.
+- Docs appended: `docs/API.md`, `docs/HERMES-v1.md`, `docs/TRAYCER-v1.md`. Test accounts in `/app/memory/test_credentials.md`; token helper `/app/scripts/tokens.sh`.
+- Verification: testing agent iteration_2 — backend 34/34 (`tests/test_iteration2_features.py` + core regression), all owner/client UI flows pass. Known non-issue: console "<span> cannot be a child of <option>" comes from the Emergent dev-only visual-edits babel plugin (`data-ve-dynamic` spans), not app code; absent in production builds.
+
 ## Prioritized backlog and next tasks
+
+P0 (new): owner runs `dox_vault.py login` + `folder` against the real Obsidian vault; install CLI for Microsoft 365 and run `m365` sync against the actual SharePoint/OneDrive folder; grant first team/client vault access.
+P1 (new): semantic (embedding) retrieval instead of Mongo text search once the vault grows; scheduled vault re-sync (cron) from Traycer; meeting reminders (notification 24 h before) and .ics export; Google Calendar sync if later requested; client-upload "received" acknowledgement by staff if the owner wants a review gate.
+
 
 P0 for external rollout: owner changes temporary password; connect and acceptance-test actual Hermes phone runtime, Dox sender and separately built Traycer; configure actual live application origin and service secrets; full security/operational review before sensitive real client records.
 

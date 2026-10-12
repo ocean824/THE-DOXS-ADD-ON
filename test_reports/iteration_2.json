@@ -1,0 +1,46 @@
+{
+  "summary": "Iteration 2 testing complete. Backend 34/34 passed (21 new iteration-2 tests + 13 regression). Frontend: owner Knowledge/Calendar/Assistant/Messages flows and client role all working — assistant SSE streaming now returns answer with sources and button returns to 'Generate' (previous bug fixed). Messages new-conversation submit disabled with inline hint when no participant selected (previous bug fixed). One pre-existing hydration warning still reproducing: <span> inside <option> under KnowledgePanels Access-grants user select.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Knowledge vault › Access grants tab (owner)",
+        "issues": [
+          "React hydration warning: `<span>` cannot be a child of `<option>` — triggered by Field/Select rendering `people` names inside the grant-user-select <option>. Source: /app/frontend/src/components/KnowledgePanels.js (VaultGrants form, option render around line 37). Does not block functionality but pollutes console and risks SSR mismatch."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration2_features.py",
+    "/app/backend/tests/test_external_api_core.py",
+    "/app/test_reports/pytest/iteration2_results.xml",
+    "/app/test_reports/pytest/regression_results.xml"
+  ],
+  "action_items": [
+    "Fix hydration warning in KnowledgePanels.js: render option text as a plain string, not wrapped in a <span>. Likely a Field/Select helper placing a <span>{children}</span> inside <option>. Use raw text node for <option> content."
+  ],
+  "critical_code_review_comments": [
+    "knowledge_routes.permitted_filter builds project clauses only when `grant.project_types` is truthy AND the user is on at least one transaction — correct, but item.id returns 404 for non-permitted team-member items which is the intended privacy behavior; verified.",
+    "hermes_grant idempotency path returns the stored result for the same body (not 201 again) — current code returns `existing['result']` with implicit 200. The review-request expected '201 same result' is satisfied because FastAPI respects route status_code=201 even for cached payloads; verified via test.",
+    "calendar_routes.update_meeting resets responses on any starts_at change — organizer keeps 'accepted' because the dict comprehension re-assigns `pid==user['id']`. Only organizer-or-owner can PATCH, consistent with 403 on non-organizer; verified.",
+    "document_routes.upload forces visibility='client' and client_submitted=True for CLIENT role even if 'internal' is sent — verified.",
+    "Minor: KnowledgePanels Access-grants form currently causes a React hydration warning (<span> inside <option>). Replace Field’s inline label span inside <option> rendering with text content."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration2_features.py",
+    "/app/test_reports/iteration_2.json"
+  ],
+  "success_rate": {"backend": "100% (34/34)", "frontend": "~95% (all flows pass; one lingering hydration console warning)"},
+  "test_credentials": "Owner xcyclone8@outlook.com / INITIAL_OWNER_PASSWORD; Team vault.tester@example.com / VaultTester#2026; Client portal.client@example.com / PortalClient#2026",
+  "seed_data_creation": "Created TEST_IT2/* knowledge items (alpha.md, office/manual.docx), temporary users/transactions/documents/meetings with TEST_IT2 prefix — all cleaned up via Mongo teardown. Hermes service key issued during Hermes tests then revoked. knowledge_rules.enabled reset to false. One UITEST_IT2 Meeting in June 2027 was cancelled by owner during UI test.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Backend iteration-2 regression file: /app/backend/tests/test_iteration2_features.py (21 tests, 9s runtime). Combined with test_external_api_core.py gives 34 tests. For UI tests on Assistant/SSE always use wait_until='domcontentloaded' as /api/events keeps networkidle from firing. The persistent hydration warning is produced by KnowledgePanels Access-grants `grant-user-select` option rendering (people.map -> <option><span>{name}</span></option> pattern via Field helper).",
+  "rca of the issue": "Hydration warning RCA: In /app/frontend/src/components/KnowledgePanels.js the VaultGrants form uses a shared Field/Select helper that wraps dynamic text in a <span data-ve-dynamic='true'>. When mapped inside <option> for the grant-user-select, React emits 'In HTML, <span> cannot be a child of <option>'. Fix is to render the user name as a plain text child (e.g., {u.name}) directly inside <option>, bypassing the span wrapper. Does not affect behavior but shows in every console session."
+}
