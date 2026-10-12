@@ -93,3 +93,7 @@ android-sdk/
 
 # Keep the handoff bundle for thedoxs.com
 !handoff/dox-workspace-handoff.zip
+*.env
+credentials.json
+*.key
+.credentials
