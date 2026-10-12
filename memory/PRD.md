@@ -57,6 +57,12 @@ User decisions: knowledge source = local Obsidian vault (owner copies/syncs it i
 - Docs appended: `docs/API.md`, `docs/HERMES-v1.md`, `docs/TRAYCER-v1.md`. Test accounts in `/app/memory/test_credentials.md`; token helper `/app/scripts/tokens.sh`.
 - Verification: testing agent iteration_2 — backend 34/34 (`tests/test_iteration2_features.py` + core regression), all owner/client UI flows pass. Known non-issue: console "<span> cannot be a child of <option>" comes from the Emergent dev-only visual-edits babel plugin (`data-ve-dynamic` spans), not app code; absent in production builds.
 
+## Handoff package — 2026-06
+
+User decision: fold the workspace into thedoxs.com (same codebase/DB) at `thedoxs.com/workspace`, using the main site's existing auth with a role mapping (site admin → OWNER, staff → TEAM_MEMBER, customers → CLIENT).
+- `/app/handoff/`: `HANDOFF.md` (architecture, inventory, data model, 9 merge steps, caveats), `AUTH-ROLE-MAPPING.md` (replacement `current_user()` adapter, role table, frontend auth changes, data migration), `MERGE-PROMPT.md` (copy-paste prompt for the thedoxs.com agent), `env.example`, `openapi.json` (63 paths), `dox-workspace-handoff.zip` (127 files; rebuild with `scripts/build_handoff.sh`).
+- Owner-only endpoints `GET /api/integrations/handoff` (zip) and `GET /api/integrations/handoff/guide`; Connections page "Handoff package" section with download + guide modal. Verified: owner 200, team member 403, UI modal renders.
+
 ## Prioritized backlog and next tasks
 
 P0 (new): owner runs `dox_vault.py login` + `folder` against the real Obsidian vault; install CLI for Microsoft 365 and run `m365` sync against the actual SharePoint/OneDrive folder; grant first team/client vault access.

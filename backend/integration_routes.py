@@ -2,7 +2,7 @@ import secrets,json
 from pathlib import Path
 from datetime import datetime,timezone,timedelta
 from fastapi import APIRouter,Depends,HTTPException
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse,FileResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from pymongo.errors import DuplicateKeyError
 from pydantic import BaseModel
@@ -59,6 +59,15 @@ async def prompt(target:str,user=Depends(require('manage'))):
 @router.get('/cli',response_class=PlainTextResponse,responses={200:{'content':{'text/x-python':{}},'description':'dox-vault command-line tool: syncs an Obsidian folder or Microsoft 365 (CLI for Microsoft 365) files into the knowledge vault using owner desktop tokens.'}})
 async def cli(user=Depends(require('manage'))):
     return PlainTextResponse((Path(__file__).parent.parent/'cli'/'dox_vault.py').read_text(),headers={'Content-Disposition':'attachment; filename="dox_vault.py"'})
+@router.get('/handoff',responses={200:{'content':{'application/zip':{}},'description':'Owner-only handoff bundle: backend, frontend source, docs, CLI, tests and merge guides for folding the workspace into thedoxs.com.'}})
+async def handoff(user=Depends(require('manage'))):
+    path=Path(__file__).parent.parent/'handoff'/'dox-workspace-handoff.zip'
+    if not path.exists():raise HTTPException(404,'Handoff bundle has not been built')
+    return FileResponse(path,media_type='application/zip',filename='dox-workspace-handoff.zip')
+@router.get('/handoff/guide',response_model=PromptOut)
+async def handoff_guide(user=Depends(require('manage'))):
+    base=Path(__file__).parent.parent/'handoff'
+    return {'version':'HANDOFF-v1','content':'\n\n'.join((base/name).read_text() for name in ('MERGE-PROMPT.md','HANDOFF.md','AUTH-ROLE-MAPPING.md'))}
 @router.post('/reviews/{id}/confirmation',response_model=ConfirmationOut)
 async def confirm(id:str,data:ConfirmationIn,user=Depends(require('review'))):
     review=await Repo(user).get('reviews',id)
