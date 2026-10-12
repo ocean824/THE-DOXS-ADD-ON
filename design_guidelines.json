@@ -1,0 +1,119 @@
+{
+  "app_identity": {
+    "name": "Emergent CRM",
+    "tagline": "Real Estate Transaction Coordination & AI Operations Gateway",
+    "theme_inspiration": "Institutional Restrained Dark (inspired by www.thedoxs.com & www.losslessholdings.com with Knock CRM pipeline efficiency)"
+  },
+  "design_philosophy": {
+    "archetype": "Institutional Restrained Dark & High-Precision Tactical",
+    "core_principles": [
+      "Tactical Elegance: Deep obsidian panels, fine 1px charcoal grid borders, warm champagne accent highlights (#E5B869).",
+      "Storytelling Layout: Every screen feels like an executive command center for high-stakes real estate deals.",
+      "Density & Clarity: Knock-style card pipelines paired with side-by-side compliance review queues and real-time thread messaging.",
+      "Accessibility & Precision: High contrast ratios, strict data-testid tags on all interactive controls, no generic blue gradients."
+    ]
+  },
+  "colors": {
+    "background_page": "#0A0D12",
+    "surface_card": "#121620",
+    "surface_elevated": "#1A1F2C",
+    "surface_border": "#232938",
+    "border_highlight": "rgba(229, 184, 105, 0.3)",
+    "accent_primary": "#E5B869",
+    "accent_primary_hover": "#F0C77B",
+    "text_primary": "#F8FAFC",
+    "text_secondary": "#94A3B8",
+    "text_muted": "#64748B",
+    "status_lead": "#3B82F6",
+    "status_appointment": "#8B5CF6",
+    "status_contract": "#E5B869",
+    "status_closing": "#10B981",
+    "status_overdue": "#EF4444",
+    "status_review_pending": "#F59E0B"
+  },
+  "typography": {
+    "fonts": {
+      "display": "Cormorant Garamond, Serif",
+      "body": "Plus Jakarta Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl font-serif tracking-tight text-[#F8FAFC]",
+      "h2": "text-2xl sm:text-3xl font-serif tracking-tight text-[#F8FAFC]",
+      "h3": "text-xl font-sans font-semibold text-[#F8FAFC]",
+      "eyebrow": "text-xs font-mono uppercase tracking-[0.2em] text-[#E5B869]",
+      "body": "text-sm text-[#94A3B8] leading-relaxed",
+      "mono_data": "text-xs font-mono text-[#E5B869]"
+    }
+  },
+  "layout": {
+    "navigation": "Left fixed sidebar (#0E1117) with smooth collapsible state, role indicators, quick stage switchers.",
+    "top_header": "Sticky glassmorphism bar (backdrop-blur-md bg-[#0A0D12]/85 border-b border-[#232938]) with role selection (Owner, Team Member, Client), notifications counter, search input, and Hermes mobile connection status badge.",
+    "main_container": "Max-w-7xl mx-auto p-6 md:p-8 space-y-8"
+  },
+  "image_urls": {
+    "hero_properties": [
+      {
+        "url": "https://images.unsplash.com/photo-1613977257363-707ba9348227?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwbW9kZXJuJTIwcHJvcGVydHklMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzkxNzY5ODQ5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern luxury white villa with infinity pool",
+        "usage": "Transaction detail banner & featured estate card"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwbW9kZXJuJTIwcHJvcGVydHklMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzkxNzY5ODQ5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Architectural contemporary residence",
+        "usage": "Property listing thumbnail"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1706808849780-7a04fbac83ef?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwbW9kZXJuJTIwcHJvcGVydHklMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzkxNzY5ODQ5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern house with illuminated glass facade at twilight",
+        "usage": "Pipeline deal highlight"
+      }
+    ],
+    "client_meetings": [
+      {
+        "url": "https://images.unsplash.com/photo-1562564055-71e051d33c19?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjV8MHwxfHNlYXJjaHwxfHxyZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBjbGllbnQlMjBtZWV0aW5nJTIwY29uc3VsdGF0aW9ufGVufDB8fHx8MTc5MTc2OTg0OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Closing transaction contract signature",
+        "usage": "Transaction review queue audit header"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1526948531399-320e7e40f0ca?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjV8MHwxfHNlYXJjaHwyfHxyZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBjbGllbnQlMjBtZWV0aW5nJTIwY29uc3VsdGF0aW9ufGVufDB8fHx8MTc5MTc2OTg0OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Executive agents consultation",
+        "usage": "Team member activity feed avatar"
+      }
+    ],
+    "abstract_textures": [
+      {
+        "url": "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwyfHxkYXJrJTIwYWJzdHJhY3QlMjBtZXRhbGxpYyUyMGFyY2hpdGVjdHVyZSUyMGRlc2lnbnxlbnwwfHx8fDE3OTE3Njk4NDl8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Dark metallic steel architecture geometry",
+        "usage": "Auth page side background banner & Hermes AI hub hero"
+      }
+    ]
+  },
+  "modules_breakdown": {
+    "auth": "Sophisticated dark institutional login with credential presets (Owner, Team Member, Client), password recovery modal, JWT session status.",
+    "dashboard_and_contacts": "Knock CRM card-based pipeline (Lead -> Appointment -> Contract -> Closing) with stage filters, deal search, contact CRM cards, activity feed.",
+    "transaction_coordination": "Detailed deal page with property specs, key milestone dates (Contingency, EMD, Inspection, Closing), auto-populated task checklist template with overdue badges, role-based document storage.",
+    "review_queue": "Owner audit center showing side-by-side compliance, missing docs checker, interactive Approve / Reject with Revision Notes, full timeline audit trail.",
+    "messaging_threads": "Unified conversation inbox with real-time thread filter, client ↔ team ↔ owner tags, @mentions, read receipts, and notification preferences.",
+    "ai_gateway_assistant": "Proxy interface to Hermes LLM with template buttons ('Draft Client Email', 'Summarize Status', 'Closing Recap', 'Audit Checklist'), role daily message rate-limit counters, system prompt protection logs, and Hermes mobile phone agent approval bridge instructions.",
+    "hermes_traycer_integrations": "Dedicated hub with copyable prompts for Hermes agent & Traycer Windows 11 desktop client, OpenAPI spec download/copy button, owner approval toggle."
+  },
+  "testing_guidelines": {
+    "requirement": "ALL interactive components, inputs, buttons, tables, pipeline cards, and tabs MUST include descriptive data-testid attributes in kebab-case.",
+    "examples": [
+      "data-testid=\"login-email-input\"",
+      "data-testid=\"pipeline-stage-contract\"",
+      "data-testid=\"transaction-task-checkbox\"",
+      "data-testid=\"review-approve-button\"",
+      "data-testid=\"ai-prompt-template-draft-email\"",
+      "data-testid=\"role-switcher-select\""
+    ]
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Use Javascript (.js) components for all React components.",
+    "Do not use universal CSS transitions like 'transition: all'. Explicitly specify properties (e.g. transition: opacity 0.2s ease, transform 0.2s ease).",
+    "Ensure dark theme background colors use solid obsidian tones (#0A0D12, #121620) with fine 1px charcoal borders (#232938) and gold accents (#E5B869). NEVER use raw un-tinted pure black gradients.",
+    "Use sonner for all application toasts (notifications, task completions, review submissions).",
+    "All interactive elements must have clear data-testid attributes for E2E testing."
+  ]
+}

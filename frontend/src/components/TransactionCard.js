@@ -1,0 +1,8 @@
+import {Link} from 'react-router-dom';
+import {CalendarDays,CheckSquare,ArrowUpRight} from 'lucide-react';
+import {money,dateLabel} from '../lib/api';
+import {Avatar} from './Common';
+export const TransactionCard=({transaction:t,tasks=[],compact=false})=>{
+ const list=tasks.filter(x=>x.transaction_id===t.id),done=list.filter(x=>x.completed).length;
+ return <Link to={`/transactions/${t.id}`} className="property-card" data-testid={`transaction-card-${t.id}`} draggable onDragStart={e=>e.dataTransfer.setData('transaction',t.id)}><div className="property-photo"><img src={t.image_url||'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80'} alt={t.address} loading="lazy"/><span className="property-type">{t.property_type}</span></div><div className="property-card-body"><h3>{t.address}</h3><p className="property-location">{t.city}, {t.state} {t.zip}</p><div className="property-value" data-testid={`transaction-value-${t.id}`}>{money(t.value)}</div><div className="property-card-meta"><Avatar name={t.agent||'Ocean'}/>{list.length>0?<span className="task-progress"><CheckSquare size={11}/>{done}/{list.length} tasks</span>:<span className="task-progress">{t.review_status==='approved'?'Approved':'In progress'}</span>}</div>{list.length>0&&<div className="mini-progress"><span style={{width:`${done/list.length*100}%`}}/></div>}<div className="property-card-footer"><span className={`due ${t.stage_id==='closing'?'urgent':''}`}><CalendarDays/>{t.stage_id==='closing'?'Closing':'Target'} {dateLabel(t.closing_date)}</span><ArrowUpRight/></div></div></Link>;
+};

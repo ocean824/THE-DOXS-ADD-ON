@@ -1,0 +1,15 @@
+import { Button } from './ui/button';
+import { Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription } from './ui/dialog';
+import { ArrowUpRight, Loader2, Inbox, X } from 'lucide-react';
+export const Btn=({children,id,secondary=false,loading=false,...props})=><Button data-testid={id} className={`btn ${secondary?'btn-secondary':''}`} disabled={loading||props.disabled} {...props}>{loading?<Loader2 className="spin" size={16}/>:null}{children}</Button>;
+export const IconBtn=({children,id,label,...props})=><button className="icon-btn" data-testid={id} aria-label={label} title={label} {...props}>{children}</button>;
+export const Badge=({children,color='gold',id})=><span data-testid={id} className={`badge ${color}`}>{children}</span>;
+export const Avatar=({name,size='',id})=><span data-testid={id} className={`avatar ${size}`}>{(name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}</span>;
+export const PageHeader=({eyebrow,title,subtitle,children})=><header className="page-heading"><div><div className="eyebrow" data-testid="page-eyebrow">{eyebrow}</div><h1 data-testid="page-title">{title}</h1>{subtitle&&<p data-testid="page-subtitle">{subtitle}</p>}</div><div className="heading-actions">{children}</div></header>;
+export const SectionTitle=({title,meta,children})=><div className="section-heading"><h2>{title}{meta&&<span className="count">{meta}</span>}</h2>{children}</div>;
+export const Field=({label,name,children,...props})=><label className="field"><span>{label}</span>{children||<input name={name} data-testid={`field-${name}`} {...props}/>}</label>;
+export const Modal=({open,onClose,title,description,children,id='form-modal'})=><Dialog open={open} onOpenChange={v=>!v&&onClose()}><DialogContent className="app-modal ph-no-capture" data-testid={id}><DialogHeader><DialogTitle data-testid={`${id}-title`}>{title}</DialogTitle><DialogDescription data-testid={`${id}-description`}>{description||'D.O.X Workspace'}</DialogDescription></DialogHeader>{children}</DialogContent></Dialog>;
+export const Empty=({title='Nothing here yet',text='',children})=><div className="empty" data-testid="empty-state"><Inbox size={28}/><h3>{title}</h3>{text&&<p>{text}</p>}{children}</div>;
+export const Loading=()=> <div className="loading" data-testid="content-loading"><Loader2 className="spin" size={22}/><span>Loading workspace</span></div>;
+export const ErrorState=({error,retry})=><div className="error-box" role="alert" data-testid="load-error">{error}<Btn secondary id="retry-button" onClick={retry}>Try again</Btn></div>;
+export const ArrowLink=({children,...props})=><button className="text-link" {...props}>{children}<ArrowUpRight size={14}/></button>;
