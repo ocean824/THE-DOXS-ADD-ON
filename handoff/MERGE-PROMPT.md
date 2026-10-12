@@ -1,10 +1,10 @@
 # Copy-paste prompt for the thedoxs.com Emergent agent
 
-Paste everything below the line into the chat of the thedoxs.com job after attaching `dox-workspace-handoff.zip` (or after pushing the workspace repo to GitHub and sharing the URL).
+Paste everything below the line into the chat of the thedoxs.com job. Point it at the GitHub repository you saved from this workspace job (replace `<GITHUB_REPO_URL>`); the same files are also in `handoff/dox-workspace-handoff.zip` inside that repo.
 
 ---
 
-Integrate the D.O.X Workspace into this site as `thedoxs.com/workspace`, sharing this app's codebase, MongoDB database and user accounts. The workspace source is in the attached `dox-workspace-handoff.zip` (FastAPI backend files, React `src/`, `docs/`, `cli/`, tests) with a full guide in `handoff/HANDOFF.md` and the auth adapter spec in `handoff/AUTH-ROLE-MAPPING.md`. Read both before changing anything. Do not rewrite the workspace; port it.
+Integrate the D.O.X Workspace into this site as `thedoxs.com/workspace`, sharing this app's codebase, MongoDB database and user accounts. The workspace source is the GitHub repository `<GITHUB_REPO_URL>` (FastAPI `backend/`, React `frontend/src/`, `docs/`, `cli/`, `backend/tests/`) with a full guide in `handoff/HANDOFF.md` and the auth adapter spec in `handoff/AUTH-ROLE-MAPPING.md`. Clone it, read both guides before changing anything. Do not rewrite the workspace; port it.
 
 Scope and rules:
 1. Backend: copy `core.py schemas.py crm_routes.py document_routes.py review_routes.py message_routes.py ai_routes.py knowledge_routes.py knowledge_extract.py calendar_routes.py integration_routes.py email_service.py seed.py` into this backend and register the routers in `server.py` under the existing `/api` prefix. Resolve name clashes with this site's routes by prefixing the workspace versions with `/api/workspace/...` and updating the matching frontend calls. Install `emergentintegrations` (`pip install emergentintegrations --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/`), `python-docx openpyxl python-pptx pypdf`, then `pip freeze > requirements.txt`.
